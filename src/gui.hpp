@@ -24,3 +24,5 @@ void drawSeparator(WINDOW* window, wchar_t start, wchar_t mid, wchar_t end, int 
 
 void mvadd_cppstr(int y, int x, const std::string& str);
 void mvadd_cppstrvec(int y, int x, const std::vector<std::string>& vec);
+
+extern const std::unordered_map<Keys, std::string> KeyDescriptions;

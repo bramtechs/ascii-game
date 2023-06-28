@@ -73,21 +73,21 @@ int main()
 
         lastPress = getch();
 
-        if (lastPress == 'q') {
+        if (lastPress == Keys::QUIT) {
             stop = true;
         }
 
-        if (lastPress == 'e') {
+        if (lastPress == Keys::STATS) {
             timeout(60);
             lastPress = ' ';
-            while (lastPress != 'q' && lastPress != 'e') {
+            while (lastPress != Keys::QUIT && lastPress != Keys::STATS) {
                 lastPress = getch();
                 erase();
                 drawStatWin();
-                if (lastPress == 'w') {
+                if (lastPress == Keys::UP) {
                     hp[0]++;
                 }
-                if (lastPress == 's') {
+                if (lastPress == Keys::DOWN) {
                     hp[0]--;
                 }
             }
@@ -95,28 +95,28 @@ int main()
         }
 
         // PLAYER MOVEMENT
-        if (lastPress == 'w') {
+        if (lastPress == Keys::UP) {
             if (y - CAMERA_PADDING <= 0 && worldOffsetY > 0) {
                 worldOffsetY--;
             } else {
                 y--;
             }
         }
-        if (lastPress == 's') {
+        if (lastPress == Keys::DOWN) {
             if (y + CAMERA_PADDING >= HEIGHT) {
                 worldOffsetY++;
             } else {
                 y++;
             }
         }
-        if (lastPress == 'd') {
+        if (lastPress == Keys::RIGHT) {
             if (x + CAMERA_PADDING >= WIDTH) {
                 worldOffsetX++;
             } else {
                 x++;
             }
         }
-        if (lastPress == 'a') {
+        if (lastPress == Keys::LEFT) {
             if (x - CAMERA_PADDING <= 0 && worldOffsetX > 0) {
                 worldOffsetX--;
             } else {

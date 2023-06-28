@@ -8,6 +8,11 @@
 
 using namespace std;
 
+const std::unordered_map<Keys, std::string> KeyDescriptions = {
+    { Keys::SEARCH, "Magnifying glass" },
+    { Keys::STATS, "Open stats" },
+};
+
 static int cachedWidth;
 static int cachedHeight;
 
@@ -33,7 +38,7 @@ Point drawWin(int y, int x, int width, int height, Anchor anchor)
     // FIXME: probably leaks
     char size[20];
     sprintf(size, "%ix%i", width, height);
-    memcpy(fillerTopBottom, size, std::min(strlen(size),strlen(fillerTopBottom)));
+    memcpy(fillerTopBottom, size, std::min(strlen(size), strlen(fillerTopBottom)));
 #endif
 
     char* filler = new char[width + 1];
