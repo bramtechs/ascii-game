@@ -2,9 +2,14 @@
 #include <vector>
 #include <string>
 #include <curses.h>
+#include "common.hpp"
 
-WINDOW* drawWinBegin(int x, int y, int width, int height);
-void drawWinEnd(WINDOW* window);
+enum Anchor {
+    TOP_LEFT,
+    BOTTOM_RIGHT,
+};
+
+Point drawWin(int y, int x, int width, int height, Anchor anchor=TOP_LEFT);
 
 void drawDebugText();
 

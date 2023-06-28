@@ -1,6 +1,8 @@
+#include <cstdio>
 #include <curses.h>
 #include "gui.hpp"
 #include <string>
+#include <cstring>
 #include <sstream>
 #include "common.hpp"
 
@@ -8,23 +10,51 @@ using namespace std;
 
 static int cachedWidth;
 static int cachedHeight;
-WINDOW* drawWinBegin(int x, int y, int width, int height)
+
+Point drawWin(int y, int x, int width, int height, Anchor anchor)
 {
+    // apply anchor first
+    if (anchor == BOTTOM_RIGHT) {
+        x = WIDTH - x - width;
+        y = HEIGHT - y - height;
+    }
+
     cachedWidth = width;
     cachedHeight = height;
 
-    // mvaddstr(y++, x, line.c_str());
+    char* fillerTopBottom = new char[width + 1];
+    fillerTopBottom[0] = '+';
+    fillerTopBottom[width - 1] = '+';
+    fillerTopBottom[width] = '\0';
+    memset(fillerTopBottom + 1, '-', width - 2);
 
-    WINDOW* window = subwin(stdscr, x, y, width, height);
+#if 1
+    // debug draw size
+    // FIXME: probably leaks
+    char size[20];
+    sprintf(size, "%ix%i", width, height);
+    memcpy(fillerTopBottom, size, std::min(strlen(size),strlen(fillerTopBottom)));
+#endif
 
-    box(window, ACS_VLINE, ACS_HLINE);
-    return window;
-}
+    char* filler = new char[width + 1];
+    filler[0] = '|';
+    filler[width - 1] = '|';
+    filler[width] = '\0';
+    memset(filler + 1, ' ', width - 2);
 
-void drawWinEnd(WINDOW* window)
-{
-    drawSeparator(window, L'├', L'─', L'┤', 8, cachedWidth / 1.2);
-    wrefresh(window);
+    // draw window box
+    int yy = y;
+    mvaddstr(yy, x, fillerTopBottom);
+    while (yy < y + height - 1) {
+        mvaddstr(++yy, x, filler);
+    }
+    mvaddstr(yy, x, fillerTopBottom);
+
+    delete[] filler;
+    delete[] fillerTopBottom;
+
+    constexpr int MARGIN = 2;
+    return { x + MARGIN, y + MARGIN };
 }
 
 void drawProgressBar(WINDOW* window,

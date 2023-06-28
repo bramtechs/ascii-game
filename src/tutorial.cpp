@@ -10,6 +10,6 @@ vector<string> info = { "K - Magnifying Glass", "E - Stats", "",  "WASD - Moveme
 
 void drawTutorialWin()
 {
-    const int MARGIN_RIGHT = 25;
-    mvadd_cppstrvec(HEIGHT - 20, WIDTH - MARGIN_RIGHT, info);
+    auto pos = drawWin(2, 2, 30, 10, BOTTOM_RIGHT);
+    mvadd_cppstrvec(pos.y, pos.x, info);
 }
