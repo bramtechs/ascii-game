@@ -19,7 +19,7 @@ using namespace std;
 int WIDTH = 1;
 int HEIGHT = 1;
 
-constexpr int CAMERA_PADDING = 100;
+int CAMERA_PADDING = 100;
 
 int main()
 {
@@ -56,6 +56,7 @@ int main()
         if (is_term_resized(HEIGHT, WIDTH) == true) {
             WIDTH = getmaxx(stdscr);
             HEIGHT = getmaxy(stdscr);
+            CAMERA_PADDING = std::min(WIDTH / 3, HEIGHT / 3);
         }
 
         drawMap(worldOffsetY, worldOffsetX, HEIGHT, WIDTH);
