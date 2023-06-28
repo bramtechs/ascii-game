@@ -1,7 +1,7 @@
 #include "common.hpp"
 #include "gui.hpp"
 
-const char* info[] = { "? - Magnifying Glass", "E - Stats", "",  "WASD - Movement",
+const char* info[] = { "K - Magnifying Glass", "E - Stats", "",  "WASD - Movement",
                        "Arrow Keys - Attack",  "Q - Quit",  NULL };
 
 void drawTutorialWin()

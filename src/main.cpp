@@ -56,11 +56,12 @@ int main()
         if (is_term_resized(HEIGHT, WIDTH) == true) {
             WIDTH = getmaxx(stdscr);
             HEIGHT = getmaxy(stdscr);
-            CAMERA_PADDING = std::min(WIDTH / 3, HEIGHT / 3);
+            CAMERA_PADDING = std::max(WIDTH / 3, HEIGHT / 3);
         }
 
         drawMap(worldOffsetY, worldOffsetX, HEIGHT, WIDTH);
         drawTutorialWin();
+        drawDebugText();
 
         attron(COLOR_PAIR(1));
         mvadd_cppstr(y, x, playerChar);
