@@ -5,7 +5,7 @@ int hp[2] = { 3, 10 };
 int lvl = 1;
 int xp = 0;
 
-const void drawStatWin()
+void drawStatWin()
 {
     WINDOW* statWindow = subwin(stdscr, getmaxy(stdscr) - 4, getmaxx(stdscr) - 4, 2, 2);
     int maxx = getmaxx(statWindow);

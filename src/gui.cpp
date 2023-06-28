@@ -13,19 +13,11 @@ WINDOW* drawWinBegin(int x, int y, int width, int height)
     cachedWidth = width;
     cachedHeight = height;
 
+    // mvaddstr(y++, x, line.c_str());
+
     WINDOW* window = subwin(stdscr, x, y, width, height);
 
-    werase(window);
-
-    // fix the spacing
-
     box(window, ACS_VLINE, ACS_HLINE);
-    // I HATE THIS LIBRARY
-    mvwprintw(window, 0, 0, "%lc", L'╭');
-    mvwprintw(window, 0, width - 1, "%lc", L'╮');
-    mvwprintw(window, getmaxy(window) - 1, 0, "%lc", L'╰');
-    mvwprintw(window, getmaxy(window) - 1, width - 1, "%lc", L'╯');
-
     return window;
 }
 
@@ -78,6 +70,13 @@ void mvadd_cppstr(int y, int x, const std::string& str)
     string line;
 
     while (std::getline(ss, line)) {
+        mvaddstr(y++, x, line.c_str());
+    }
+}
+
+void mvadd_cppstrvec(int y, int x, const std::vector<std::string>& vec)
+{
+    for (auto& line : vec) {
         mvaddstr(y++, x, line.c_str());
     }
 }

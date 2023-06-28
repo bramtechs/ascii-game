@@ -4,6 +4,8 @@ project(rogue)
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIRS})
 
+add_compile_options(-Wall -Wextra -Wpedantic -Werror -ggdb)
+
 file(GLOB SOURCES "*.c*" "*.h*")
 
 add_executable (${PROJECT_NAME} ${SOURCES})

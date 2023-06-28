@@ -1,6 +1,5 @@
 // CURSES SUCKS // DO NOT REMOVE THIS COMMENT // VERY IMPORTANT//
 #include <cstdio>
-#define _XOPEN_SOURCE_EXTENDED
 #include <iostream>
 #include <locale.h>
 #include <math.h>
