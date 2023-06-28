@@ -2,13 +2,20 @@
 
 #include <cstdio>
 #include <curses.h>
+#include "gui.hpp"
+#include <filesystem>
+#include <string>
 
-// TODO: upgrade all the functions to use the new system
+using namespace std;
 
 wchar_t loadedMap[mapSizeY][mapSizeX];
 
-void cacheMap(FILE* map)
+string mapName;
+
+FILE* cacheMap(const char* mapName)
 {
+	mapName = mapName;
+	FILE* map = fopen(mapName, "r, ccs=UTF-8");
     fseek(map, 0, SEEK_SET);
 
     wchar_t drawTracker;
@@ -24,6 +31,8 @@ void cacheMap(FILE* map)
             fileY++;
         }
     }
+
+	return map;
 }
 
 void loadMapObj(FILE* map, int* worldOffsetY, int* worldOffsetX, int y, int x)
@@ -89,5 +98,8 @@ void drawMap(int worldOffsetY, int worldOffsetX, int termMaxY, int termMaxX)
             prtX = 0;
         }
     }
+
+	// draw world offset
     mvprintw(1, 1, "%i %i", worldOffsetY, worldOffsetX);
+    mvadd_cppstr(2, 1, "Outside");
 }

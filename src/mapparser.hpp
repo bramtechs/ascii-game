@@ -7,7 +7,7 @@
 #include <wchar.h>
 #include "collision.hpp"
 
-void cacheMap(FILE *map);
-void loadMapObj(FILE *map, int *worldOffsetY, int *worldOffsetX, int y, int x);
-void loadMapCol(FILE *map);
+FILE* cacheMap(const char* mapName);
+void loadMapObj(FILE* map, int* worldOffsetY, int* worldOffsetX, int y, int x);
+void loadMapCol(FILE* map);
 void drawMap(int worldOffsetY, int worldOffsetX, int termMaxY, int termMaxX);

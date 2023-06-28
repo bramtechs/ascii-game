@@ -1,4 +1,5 @@
 // CURSES SUCKS // DO NOT REMOVE THIS COMMENT // VERY IMPORTANT//
+#include <cstdio>
 #define _XOPEN_SOURCE_EXTENDED
 #include <iostream>
 #include <locale.h>
@@ -10,13 +11,15 @@
 #include "common.hpp"
 #include "mapparser.hpp"
 #include "stats.hpp"
+#include "tutorial.hpp"
+#include "gui.hpp"
 
 using namespace std;
 
-inline void mvadd_cppstr(int y, int x, const std::string& str)
-{
-    mvaddnstr(y, x, str.c_str(), str.size());
-}
+int WIDTH = 1;
+int HEIGHT = 1;
+
+constexpr int CAMERA_PADDING = 100;
 
 int main()
 {
@@ -33,30 +36,30 @@ int main()
     int y = 20;
     int lastX = 0;
     int lastY = 0;
-    int termMaxX = getmaxx(stdscr);
-    int termMaxY = getmaxy(stdscr);
+    WIDTH = getmaxx(stdscr);
+    HEIGHT = getmaxy(stdscr);
     int worldOffsetY = 0;
     int worldOffsetX = 0;
     int lastWorldOffsetY = 0;
     int lastWorldOffsetX = 0;
     bool stop = false;
     char lastPress;
-std:;
+
     string playerChar = "@";
 
-    FILE* map = fopen("maps/testmap.map", "r, ccs=UTF-8");
-
-    cacheMap(map);
+    FILE* map = cacheMap("maps/outside.map");
     loadMapCol(map);
     loadMapObj(map, &worldOffsetY, &worldOffsetX, y, x);
+    fclose(map);
 
     while (stop == false) {
-        if (is_term_resized(termMaxY, termMaxX) == true) {
-            termMaxX = getmaxx(stdscr);
-            termMaxY = getmaxy(stdscr);
+        if (is_term_resized(HEIGHT, WIDTH) == true) {
+            WIDTH = getmaxx(stdscr);
+            HEIGHT = getmaxy(stdscr);
         }
 
-        drawMap(worldOffsetY, worldOffsetX, std::min(WIDTH, termMaxY), std::min(HEIGHT, termMaxX));
+        drawMap(worldOffsetY, worldOffsetX, HEIGHT, WIDTH);
+        drawTutorialWin();
 
         attron(COLOR_PAIR(1));
         mvadd_cppstr(y, x, playerChar);
@@ -90,29 +93,30 @@ std:;
             timeout(30);
         }
 
+        // PLAYER MOVEMENT
         if (lastPress == 'w') {
-            if (y - 5 <= 0 && worldOffsetY > 0) {
+            if (y - CAMERA_PADDING <= 0 && worldOffsetY > 0) {
                 worldOffsetY--;
             } else {
                 y--;
             }
         }
         if (lastPress == 's') {
-            if (y + 5 >= termMaxY) {
+            if (y + CAMERA_PADDING >= HEIGHT) {
                 worldOffsetY++;
             } else {
                 y++;
             }
         }
         if (lastPress == 'd') {
-            if (x + 5 >= termMaxX) {
+            if (x + CAMERA_PADDING >= WIDTH) {
                 worldOffsetX++;
             } else {
                 x++;
             }
         }
         if (lastPress == 'a') {
-            if (x - 5 <= 0 && worldOffsetX > 0) {
+            if (x - CAMERA_PADDING <= 0 && worldOffsetX > 0) {
                 worldOffsetX--;
             } else {
                 x--;
@@ -132,6 +136,5 @@ std:;
         refresh();
         erase();
     }
-    fclose(map);
     endwin();
 }

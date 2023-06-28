@@ -1,2 +1,2 @@
-#define WIDTH 300
-#define HEIGHT 200
+extern int WIDTH;
+extern int HEIGHT;
