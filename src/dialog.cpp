@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "common.hpp"
 #include "dialog.hpp"
 
 using namespace std;
@@ -55,16 +56,35 @@ void Dialog::draw()
         // draw title
         mvwprintw(window, 4, marginLeft, "%s", currentNode->text.c_str());
         drawTranscript(6, marginLeft);
-        drawChoices(maxy - 2, marginLeft, currentNode->nodes);
+        updateAndDrawChoices(maxy - 2, marginLeft, currentNode->nodes);
     }
 
     wrefresh(window);
 }
 
-int Dialog::drawChoices(int y, int x, DialogNodeMap choices)
+int Dialog::updateAndDrawChoices(int y, int x, DialogNodeMap choices)
 {
     static int selected = 0;
 
+    // navigating dialog options
+    if (isKeyPressed(Keys::UP)) {
+        selected--;
+    }
+    if (isKeyPressed(Keys::DOWN)) {
+        selected++;
+    }
+    selected %= choices.size() + 1;
+
+    // confirming dialog selection
+    if (isKeyPressed(Keys::CONFIRM)) {
+        if (selected == choices.size()) {
+            return GOODBYE;
+        } else {
+            return selected;
+        }
+    }
+
+    // drawing dialog options
     int i = 0;
     int yy = y - choices.size() - 1;
     for (auto& [key, choice] : choices) {

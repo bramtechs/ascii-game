@@ -22,6 +22,12 @@ int HEIGHT = 1;
 
 int CAMERA_PADDING = 100;
 
+static char lastPress;
+
+bool isKeyPressed(char key){
+    return lastPress == key;
+}
+
 int main()
 {
     initscr();
@@ -44,7 +50,6 @@ int main()
     int lastWorldOffsetY = 0;
     int lastWorldOffsetX = 0;
     bool stop = false;
-    char lastPress;
 
     FILE* map = cacheMap("maps/outside.map");
     loadMapCol(map);
@@ -72,9 +77,9 @@ int main()
         mvaddstr(y, x, player->symbolAsCStr());
         attroff(COLOR_PAIR(1));
 
+        drawDebugText();
         drawTutorialWin();
         dialog.draw();
-        drawDebugText();
 
         // TODO: Refactor player
         lastX = x;

@@ -37,6 +37,6 @@ class Dialog {
 
     // gui
     WINDOW* window;
-    int drawChoices(int y, int x, DialogNodeMap choices);
+    int updateAndDrawChoices(int y, int x, DialogNodeMap choices);
     void drawTranscript(int y, int x);
 };

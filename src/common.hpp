@@ -25,5 +25,10 @@ enum Keys {
     STATS = 'e',
     SEARCH = 'k',
     CENTER = 'c',
+
+    CONFIRM = 'w',
     QUIT = 'q',
 };
+
+// TODO: put in input.hpp
+bool isKeyPressed(char key);
