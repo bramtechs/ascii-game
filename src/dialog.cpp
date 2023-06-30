@@ -10,12 +10,11 @@ Dialog::Dialog(string speaker, DialogNode tree)
 {
     this->speaker = speaker;
     this->tree = std::make_shared<DialogNode>(new DialogNode(tree));
+    this->currentNode = this->tree;
 }
 
-Dialog::Dialog(string speaker, function<DialogNode()> tree)
+Dialog::Dialog(string speaker, function<DialogNode()> tree) : Dialog(speaker, tree())
 {
-    this->speaker = speaker;
-    this->tree = std::make_shared<DialogNode>(tree());
 }
 
 DialogNode::DialogNode(DialogNode* node)
@@ -30,6 +29,10 @@ DialogNode::DialogNode(string text)
     this->nodes = {};
 }
 
+DialogNode::DialogNode() : DialogNode("...")
+{
+}
+
 DialogNode& DialogNode::append(string key, DialogNode node)
 {
     nodes[key] = std::make_shared<DialogNode>(new DialogNode(node));
@@ -38,28 +41,43 @@ DialogNode& DialogNode::append(string key, DialogNode node)
 
 void Dialog::draw()
 {
+    const int marginLeft = 2;
+
     window = drawFullscreenWindow();
     int maxx = getmaxx(window);
     int maxy = getmaxy(window);
 
     string title = "Dialog with " + speaker;
-    mvwprintw(window, 2, maxx / 2 - 3, "%s", title.c_str());
+    mvwprintw(window, 2, marginLeft, "%s", title.c_str());
 
-    drawChoices(maxy - 2, 5, { "Yes", "No" });
+    DialogNode* currentNode = this->currentNode.get();
+    if (currentNode != nullptr) {
+        // draw title
+        mvwprintw(window, 4, marginLeft, "%s", currentNode->text.c_str());
+        drawTranscript(6, marginLeft);
+        drawChoices(maxy - 2, marginLeft, currentNode->nodes);
+    }
 
     wrefresh(window);
 }
 
-int Dialog::drawChoices(int y, int x, vector<string> choices)
+int Dialog::drawChoices(int y, int x, DialogNodeMap choices)
 {
     static int selected = 0;
 
     int i = 0;
-    int yy = y - choices.size();
-    for (auto& choice : choices) {
+    int yy = y - choices.size() - 1;
+    for (auto& [key, choice] : choices) {
         const char* prefix = selected == i ? "> %s" : "  %s";
-        mvwprintw(window, yy + i++, x, prefix, choice.c_str());
+        mvwprintw(window, yy + i++, x, prefix, key.c_str());
     }
+    const char* prefix = selected == choices.size() ? "> %s" : "  %s";
+    mvwprintw(window, yy + i++, x, prefix, "Goodbye");
 
     return NO_SELECTION;
+}
+
+void Dialog::drawTranscript(int y, int x)
+{
+    // TODO
 }

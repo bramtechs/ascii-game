@@ -6,13 +6,18 @@
 #include "gui.hpp"
 
 constexpr int NO_SELECTION = -1;
+constexpr int GOODBYE = -2;
+
+struct DialogNode;
+typedef std::unordered_map<std::string, std::shared_ptr<DialogNode>> DialogNodeMap;
 
 struct DialogNode {
     std::string text;
-    std::unordered_map<std::string, std::shared_ptr<DialogNode>> nodes;
+    DialogNodeMap nodes;
 
     DialogNode(DialogNode* node);
     DialogNode(std::string text);
+    DialogNode();
 
     DialogNode& append(std::string key, DialogNode node);
 };
@@ -28,8 +33,10 @@ class Dialog {
 
    private:
     std::shared_ptr<DialogNode> tree;
+    std::shared_ptr<DialogNode> currentNode;
 
     // gui
     WINDOW* window;
-    int drawChoices(int y, int x, std::vector<std::string> choices);
+    int drawChoices(int y, int x, DialogNodeMap choices);
+    void drawTranscript(int y, int x);
 };

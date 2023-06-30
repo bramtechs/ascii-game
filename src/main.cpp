@@ -52,7 +52,10 @@ int main()
     loadMapObj(map, &worldOffsetY, &worldOffsetX, y, x);
     fclose(map);
 
-    Dialog dialog("Test", DialogNode("Hello").append("Yes", DialogNode("Yes")).append("No", DialogNode("No")));
+    Dialog dialog("Tavernkeeper",
+                  DialogNode("Hello and welcome to my humble shop! How can I help you?")
+                      .append("Where can I find food?", DialogNode())
+                      .append("Where can I find adventure?", DialogNode()));
 
     while (stop == false) {
         if (is_term_resized(HEIGHT, WIDTH) == true) {
