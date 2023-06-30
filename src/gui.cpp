@@ -115,3 +115,22 @@ void mvadd_cppstrvec(int y, int x, const std::vector<std::string>& vec)
         mvaddstr(y++, x, line.c_str());
     }
 }
+
+WINDOW* drawFullscreenWindow()
+{
+    WINDOW* window = subwin(stdscr, getmaxy(stdscr) - 4, getmaxx(stdscr) - 4, 2, 2);
+    int maxx = getmaxx(window);
+
+    werase(window);
+
+    // fix the spacing
+
+    box(window, ACS_VLINE, ACS_HLINE);
+    // I HATE THIS LIBRARY
+    mvwprintw(window, 0, 0, "%lc", L'╭');
+    mvwprintw(window, 0, maxx - 1, "%lc", L'╮');
+    mvwprintw(window, getmaxy(window) - 1, 0, "%lc", L'╰');
+    mvwprintw(window, getmaxy(window) - 1, maxx - 1, "%lc", L'╯');
+
+    return window;
+}

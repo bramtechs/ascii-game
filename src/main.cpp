@@ -11,6 +11,7 @@
 #include "mapparser.hpp"
 #include "stats.hpp"
 #include "tutorial.hpp"
+#include "dialog.hpp"
 #include "gui.hpp"
 
 using namespace std;
@@ -51,6 +52,8 @@ int main()
     loadMapObj(map, &worldOffsetY, &worldOffsetX, y, x);
     fclose(map);
 
+    Dialog dialog("Test", DialogNode("Hello").append("Yes", DialogNode("Yes")).append("No", DialogNode("No")));
+
     while (stop == false) {
         if (is_term_resized(HEIGHT, WIDTH) == true) {
             WIDTH = getmaxx(stdscr);
@@ -60,6 +63,7 @@ int main()
 
         drawMap(worldOffsetY, worldOffsetX, HEIGHT, WIDTH);
         drawTutorialWin();
+        dialog.draw();
         drawDebugText();
 
         attron(COLOR_PAIR(1));
@@ -124,8 +128,7 @@ int main()
             }
         }
 
-        if ((lastWorldOffsetX != worldOffsetY || lastWorldOffsetX != worldOffsetX)
-            || (lastY != y || lastX != x)) {
+        if ((lastWorldOffsetX != worldOffsetY || lastWorldOffsetX != worldOffsetX) || (lastY != y || lastX != x)) {
             if (colCheck(worldOffsetY + y, worldOffsetX + x) || (y < 0 || x < 0)) {
                 x = lastX;
                 y = lastY;

@@ -1,5 +1,6 @@
-#include "gui.hpp"
 #include "stats.hpp"
+
+#include "gui.hpp"
 
 int hp[2] = { 3, 10 };
 int lvl = 1;
@@ -7,19 +8,8 @@ int xp = 0;
 
 void drawStatWin()
 {
-    WINDOW* statWindow = subwin(stdscr, getmaxy(stdscr) - 4, getmaxx(stdscr) - 4, 2, 2);
+    WINDOW* statWindow = drawFullscreenWindow();
     int maxx = getmaxx(statWindow);
-
-    werase(statWindow);
-
-    // fix the spacing
-
-    box(statWindow, ACS_VLINE, ACS_HLINE);
-    // I HATE THIS LIBRARY
-    mvwprintw(statWindow, 0, 0, "%lc", L'╭');
-    mvwprintw(statWindow, 0, maxx - 1, "%lc", L'╮');
-    mvwprintw(statWindow, getmaxy(statWindow) - 1, 0, "%lc", L'╰');
-    mvwprintw(statWindow, getmaxy(statWindow) - 1, maxx - 1, "%lc", L'╯');
 
     mvwprintw(statWindow, 2, maxx / 2 - 3, "Status:");
     drawSeparator(statWindow, L'├', L'─', L'┤', 4, maxx / 1.2);
