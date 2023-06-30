@@ -25,5 +25,5 @@ enum Keys {
     STATS = 'e',
     SEARCH = 'k',
     CENTER = 'c',
-    QUIT = 'a',
+    QUIT = 'q',
 };

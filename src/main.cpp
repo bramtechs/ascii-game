@@ -9,6 +9,7 @@
 #include "collision.hpp"
 #include "common.hpp"
 #include "mapparser.hpp"
+#include "player.hpp"
 #include "stats.hpp"
 #include "tutorial.hpp"
 #include "dialog.hpp"
@@ -45,8 +46,6 @@ int main()
     bool stop = false;
     char lastPress;
 
-    string playerChar = "@";
-
     FILE* map = cacheMap("maps/outside.map");
     loadMapCol(map);
     loadMapObj(map, &worldOffsetY, &worldOffsetX, y, x);
@@ -57,6 +56,8 @@ int main()
                       .append("Where can I find food?", DialogNode())
                       .append("Where can I find adventure?", DialogNode()));
 
+    auto player = new Player();
+
     while (stop == false) {
         if (is_term_resized(HEIGHT, WIDTH) == true) {
             WIDTH = getmaxx(stdscr);
@@ -65,14 +66,17 @@ int main()
         }
 
         drawMap(worldOffsetY, worldOffsetX, HEIGHT, WIDTH);
+
+        // TODO: Refactor player
+        attron(COLOR_PAIR(1));
+        mvaddstr(y, x, player->symbolAsCStr());
+        attroff(COLOR_PAIR(1));
+
         drawTutorialWin();
         dialog.draw();
         drawDebugText();
 
-        attron(COLOR_PAIR(1));
-        mvadd_cppstr(y, x, playerChar);
-        attroff(COLOR_PAIR(1));
-
+        // TODO: Refactor player
         lastX = x;
         lastY = y;
         lastWorldOffsetX = worldOffsetX;
