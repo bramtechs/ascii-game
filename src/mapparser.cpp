@@ -1,14 +1,16 @@
-#include "mapparser.hpp"
-
-#include <cstdio>
-#include <curses.h>
-#include "gui.hpp"
 #include <filesystem>
 #include <string>
 
+#include <cstdio>
+#include <curses.h>
+
+#include "mapparser.hpp"
+#include "gui.hpp"
+#include "mapgenerator.hpp"
+
 using namespace std;
 
-wchar_t loadedMap[mapSizeY][mapSizeX];
+AsciiMap loadedMap;
 
 string mapName;
 
@@ -54,6 +56,8 @@ void loadMapObj(FILE* map, int* worldOffsetY, int* worldOffsetX, int y, int x)
             *worldOffsetX = fileX - x;
         }
     }
+
+    generateMapDetails(loadedMap, {});
 }
 
 void loadMapCol(FILE* map)

@@ -2,9 +2,11 @@
 
 #include "entity.hpp"
 
-Entity::Entity(Point pos)
+Entity::Entity(Point pos, char symbol, int color)
 {
     this->pos = pos;
+    this->symbol = symbol;
+    this->color = color;
 }
 
 void Entity::draw(Point& camera)

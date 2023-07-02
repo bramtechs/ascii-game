@@ -12,7 +12,7 @@ using namespace std;
 
 static Player* instance = nullptr;
 
-Player::Player(Point pos) : Entity(pos)
+Player::Player(Point pos) : Entity(pos, CHARACTER, 1)
 {
     instance = this;
 }
