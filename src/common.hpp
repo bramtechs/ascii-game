@@ -2,6 +2,8 @@
 #include <string>
 #include <unordered_map>
 
+#define PI 3.14159265
+
 extern int WIDTH;
 extern int HEIGHT;
 extern int CAMERA_PADDING;
