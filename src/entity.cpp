@@ -10,7 +10,7 @@ Entity::Entity(Point pos)
 void Entity::draw(Point& camera)
 {
     attron(COLOR_PAIR(color));
-    mvaddstr(pos.y - camera.y, pos.x - camera.x, symbolAsCStr());
+    mvaddstr(pos.y, pos.x, symbolAsCStr());
     attroff(COLOR_PAIR(color));
 }
 

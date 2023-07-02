@@ -6,8 +6,9 @@
 
 class Player : public Entity {
    public:
+    static Player& get();
+
     Player(Point pos);
-    Player* get();
 
     void draw(Point& camera);
 };

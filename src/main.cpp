@@ -68,13 +68,13 @@ int main()
             CAMERA_PADDING = std::max(WIDTH / 3, HEIGHT / 3);
         }
 
-        drawMap(camera, { HEIGHT, WIDTH });
+        drawMap(camera, { WIDTH, HEIGHT });
 
         player.draw(camera);
 
-        drawDebugText();
+        drawDebugText(camera);
         drawTutorialWin();
-        //dialog.draw();
+        // dialog.draw();
 
         // handle key input
         lastPress = getch();

@@ -98,8 +98,9 @@ void drawMap(Point offset, Point max)
             prtX = 0;
         }
     }
+}
 
-    // draw world offset
-    mvprintw(1, 1, "%i %i", offset.y, offset.x);
-    mvadd_cppstr(2, 1, "Outside");
+string getMapName()
+{
+    return mapName;
 }

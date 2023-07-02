@@ -4,7 +4,9 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+
 #include "common.hpp"
+#include "player.hpp"
 
 using namespace std;
 
@@ -62,13 +64,7 @@ Point drawWin(int y, int x, int width, int height, Anchor anchor)
     return { x + MARGIN, y + MARGIN };
 }
 
-void drawProgressBar(WINDOW* window,
-                     wchar_t full,
-                     wchar_t empty,
-                     int percentFull,
-                     int y,
-                     int start,
-                     int end)
+void drawProgressBar(WINDOW* window, wchar_t full, wchar_t empty, int percentFull, int y, int start, int end)
 {
     int i;
     for (i = 0; i < (int)end - start; i++) {
@@ -91,12 +87,18 @@ void drawSeparator(WINDOW* window, wchar_t start, wchar_t mid, wchar_t end, int 
     mvwprintw(window, y, (int)((getmaxx(window) / 2) + (length / 2)), "%lc", end);
 }
 
-void drawDebugText()
+void drawDebugText(Point& camera)
 {
-    string info = "Debug info:\nScreen size: " + to_string(getmaxx(stdscr)) + "x"
-                  + to_string(getmaxy(stdscr)) + "\n";
-    info += "Camera padding: " + to_string(CAMERA_PADDING) + "\n";
-    mvadd_cppstr(10, 1, info);
+    static char buffer[1024] = { 0 };
+    sprintf(buffer,
+            "Debug info:\nPlayer pos: %dx%d\nScreen size: %d by %d\nCamera padding: %d\nCamera pos: %dx%d",
+            Player::get().pos.x, Player::get().pos.y,
+            WIDTH,
+            HEIGHT,
+            CAMERA_PADDING,
+            camera.x,
+            camera.y);
+    mvadd_cppstr(10, 1, buffer);
 }
 
 void mvadd_cppstr(int y, int x, const std::string& str)

@@ -23,8 +23,8 @@ void drawStatWin()
                     maxx - maxx / 1.2 + 4,
                     maxx / 1.2 - 3);
     mvwprintw(statWindow, 6, maxx / 1.2 + 3, (hp[0] < hp[1] + 1) ? "%i/%i" : "???", hp[0], hp[1]);
-    drawSeparator(statWindow, L'├', L'─', L'┤', 8, maxx / 1.2);
 
+    drawSeparator(statWindow, L'├', L'─', L'┤', 8, maxx / 1.2);
     drawSeparator(statWindow, L'├', L'─', L'┤', 12, maxx / 1.2);
 
     wrefresh(statWindow);

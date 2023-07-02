@@ -10,22 +10,24 @@
 
 using namespace std;
 
-static Player* instance;
+static Player* instance = nullptr;
 
 Player::Player(Point pos) : Entity(pos)
 {
     instance = this;
 }
 
-Player* Player::get()
+Player& Player::get()
 {
-    return instance;
+    return *instance;
 }
 
 void Player::draw(Point& camera)
 {
     static Point lastPos = pos;
     static Point lastCamera = { 0 };
+
+    lastPos = pos;
     lastCamera = camera;
 
     if (isKeyPressed(Keys::STATS)) {
