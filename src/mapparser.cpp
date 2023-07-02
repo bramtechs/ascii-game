@@ -14,8 +14,8 @@ string mapName;
 
 FILE* cacheMap(const char* mapName)
 {
-	mapName = mapName;
-	FILE* map = fopen(mapName, "r, ccs=UTF-8");
+    mapName = mapName;
+    FILE* map = fopen(mapName, "r, ccs=UTF-8");
     fseek(map, 0, SEEK_SET);
 
     wchar_t drawTracker;
@@ -32,7 +32,7 @@ FILE* cacheMap(const char* mapName)
         }
     }
 
-	return map;
+    return map;
 }
 
 void loadMapObj(FILE* map, int* worldOffsetY, int* worldOffsetX, int y, int x)
@@ -76,30 +76,30 @@ void loadMapCol(FILE* map)
     }
 }
 
-void drawMap(int worldOffsetY, int worldOffsetX, int termMaxY, int termMaxX)
+void drawMap(Point offset, Point max)
 {
     int i;
     int prtY = 0;
     int prtX = 0;
 
-    for (i = 0; i < (termMaxY * termMaxX); i++) {
-        if (worldOffsetY < 0 || worldOffsetX < 0) {
+    for (i = 0; i < (max.y * max.x); i++) {
+        if (offset.y < 0 || offset.x < 0) {
             mvprintw(prtY, prtX, "%lc", loadedMap[0 + prtY][0 + prtX]);
-        } else if (loadedMap[worldOffsetY + prtY][worldOffsetX + prtX] == L'^') {
+        } else if (loadedMap[offset.y + prtY][offset.x + prtX] == L'^') {
             prtX++;
         } else {
-            mvprintw(prtY, prtX, "%lc", loadedMap[worldOffsetY + prtY][worldOffsetX + prtX]);
+            mvprintw(prtY, prtX, "%lc", loadedMap[offset.y + prtY][offset.x + prtX]);
         }
         prtX++;
-        if (prtX == termMaxX) {
-            if (prtY != termMaxY) {
+        if (prtX == max.x) {
+            if (prtY != max.y) {
                 prtY++;
             }
             prtX = 0;
         }
     }
 
-	// draw world offset
-    mvprintw(1, 1, "%i %i", worldOffsetY, worldOffsetX);
+    // draw world offset
+    mvprintw(1, 1, "%i %i", offset.y, offset.x);
     mvadd_cppstr(2, 1, "Outside");
 }

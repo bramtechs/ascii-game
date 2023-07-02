@@ -4,6 +4,7 @@
 
 #include "common.hpp"
 #include "dialog.hpp"
+#include "input.hpp"
 
 using namespace std;
 

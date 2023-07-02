@@ -30,5 +30,3 @@ enum Keys {
     QUIT = 'q',
 };
 
-// TODO: put in input.hpp
-bool isKeyPressed(char key);
