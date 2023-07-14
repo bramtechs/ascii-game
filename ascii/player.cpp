@@ -1,5 +1,5 @@
 #include <memory>
-#include <ncursesw/ncurses.h>
+#include <curses.h>
 
 #include "collision.hpp"
 #include "common.hpp"

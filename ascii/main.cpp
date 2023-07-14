@@ -2,7 +2,7 @@
 #include <iostream>
 #include <locale.h>
 #include <math.h>
-#include <ncursesw/ncurses.h>
+#include <curses.h>
 #include <string>
 
 #include "collision.hpp"
@@ -62,7 +62,7 @@ int main()
                       .append("Where can I find adventure?", DialogNode()));
 
     while (stop == false) {
-        if (is_term_resized(HEIGHT, WIDTH) == true) {
+        if (is_termresized()) {
             WIDTH = getmaxx(stdscr);
             HEIGHT = getmaxy(stdscr);
             CAMERA_PADDING = std::max(WIDTH / 3, HEIGHT / 3);

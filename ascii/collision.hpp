@@ -1,7 +1,7 @@
 #ifndef collision_h_INCLUDED
 #define collision_h_INCLUDED
 
-#include <ncursesw/ncurses.h>
+#include <curses.h>
 #include <stdbool.h>
 #include <math.h>
 #include "arraycheck.hpp"

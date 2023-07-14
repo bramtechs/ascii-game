@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ncursesw/ncurses.h>
+#include <curses.h>
 #include <wchar.h>
 
 extern int hp[2];
